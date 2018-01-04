@@ -14,7 +14,37 @@ uint8_t lineRight[8] =  {0b1, 0b1, 0b1, 0b1, 0b1, 0b1, 0b1, 0b1};
 uint8_t lineLeft[8] =   {0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000};
 uint8_t lineLow[8] =   {0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b11111};
 uint8_t lineUp[8] =     {0b11111, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0};
+//uint8_t lineUp[8] =     {0b11111, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0};
+//uint8_t lineUp[8] =     {0b11111, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0, 0b0};
+byte light[8];
+uint8_t val = 3;
 
+
+/*for (int i = 7; i>=(8-num); --i)
+{
+  blubb[i] = 0b11111;
+}
+
+for (int i = num; i>=0; --i)
+{
+  blubb[i] = 0b0;
+}
+*/
+void printArray(){
+  for(int i= 7; i>= 0; --i){
+    lcd.setCursor(0, 0);
+    lcd.createChar(0, light[i]);
+    lcd.write(byte(0));
+  }
+  
+  
+  lcd.setCursor(14, 0);
+  lcd.write(9);
+  lcd.setCursor(13, 1);
+  lcd.write(8);
+  lcd.setCursor(14, 1);
+  lcd.write(9);
+}
 void setup() {
   Serial.begin(9600);
   lcd.init();
@@ -33,7 +63,15 @@ void setup() {
   lcd.createChar(10, lineLow);
   lcd.home();
 
-  lcd.setCursor(13, 0);
+
+int iVal= val;
+for(int i=7; iVal >= 0; --i){
+  --iVal;
+  light[i]= 0b11111;
+}
+ 
+
+  /*lcd.setCursor(13, 0);
   lcd.write(8);
   lcd.setCursor(14, 0);
   lcd.write(9);
@@ -41,6 +79,7 @@ void setup() {
   lcd.write(8);
   lcd.setCursor(14, 1);
   lcd.write(9);
+  */
   //lcd.print("Hello world...");
   //lcd.setCursor(0, 1);
   //lcd.print(" I ");
