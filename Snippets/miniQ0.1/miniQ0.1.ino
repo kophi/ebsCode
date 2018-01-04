@@ -15,7 +15,7 @@
 #define analogKey3 750
 #define analogNone 1020
 int buttonPress;
-int mode= 4;
+int mode= 3;
 int run;
 LiquidCrystal_I2C lcd(0x20, 16, 2);
 /***********************************************
@@ -28,47 +28,67 @@ void detectButton(){          //erkennt welcher Key (1-3) gedrückt worden ist
   if(analogButton<analogKey1){
     buttonPress= 1;
         //play beep1
+    delay(300);           //Zeit zum loslassen des Tasters
   }
   else if(analogButton< analogKey2){
     buttonPress= 2;
         //play beep2
+    delay(300);           //Zeit zum loslassen des Tasters
   }
   else if(analogButton<analogKey3){
     buttonPress= 3;
-        //play beep3  
+        //play beep3
+    delay(300);           //Zeit zum loslassen des Tasters  
   }
  }
 }
 //--------------------------------------------------
 void mLineFollow(){         //fährt der Linie nach
-  if(buttonPress==1){
+  if(buttonPress==1){       //zurück ins menu
     mode = 1;
   }
-  else if(buttonPress==3){
-  mode= 4;
+  else if(buttonPress==3){  //standbybetrieb
+  mode= 3;
   }
   else{
     //code für Linefollowing
+    lcd.setCursor(0,0);
+    lcd.println("Follow the light ");
+    lcd.setCursor(0,1);
+    lcd.println("Walk the line   ");
   }
 }
 //---------------------------------------------------
 void mMenu(){             //startet das Menu zeigt es auf dem LCD an
-  lcd.println("Choose Mode");
-  if(buttonPress==1){
- //LineFollow&Licht&LCD&Motors
- mode=0;
+  lcd.setCursor(0,0);
+  lcd.println("Choose Mode     ");
+  lcd.setCursor(0,1);
+  lcd.println("Press KEY 1/2/3 ");
+  if(buttonPress==1){     //LineFollow&Licht&LCD&Motors
+    mode=0;
   }
-  if(buttonPress==2){
-  //Licht&Ton&LCD
+  if(buttonPress==2){     //Licht&Ton&LCD
+    mode=2;
   }
-  if(buttonPress==3){
-    //Menu beenden
+  if(buttonPress==3){     //Menu beenden -->Standbybetrieb
+    lcd.clear();
+    mode= 3;
  }
+ 
 }
 //---------------------------------------------------
-void mHell(){           //misst die Helligkeit, zeigt diese auf dem LCD an
+void mHell(){             //misst die Helligkeit, zeigt diese auf dem LCD an
   if(buttonPress==1){
     mode = 1;
+  }
+  else if(buttonPress==3){  //standbybetrieb
+  mode= 3;
+  }
+  else{
+  lcd.setCursor(0,0);
+  lcd.println("Follow the light ");
+  lcd.setCursor(0,1);
+  lcd.println("Show the bright  ");
   }
 }
 //---------------------------------------------------
@@ -79,21 +99,25 @@ void setup() {
  Serial.begin(9600);
   lcd.init();
   lcd.backlight();
-  lcd.setCursor(0,0);
+  
 /**************************************************
  * Hauptschleife
 */  
 }
 void loop() {
 detectButton(); 
+Serial.print("buttonPress :");
+Serial.println(buttonPress);
+Serial.print("mode:        ");
 Serial.println(mode);
 
-
+//delay(1000); //nur für Serial Monitor auslesung!!
 if (mode == 0){//LineFollow
   mLineFollow();
   
  }
  else if (mode == 1){//menuMode
+  delay(300);  //Zeit zum loslassen des Tasters
   mMenu();
   
  }
@@ -104,6 +128,8 @@ else if(mode == 3){//Standby
   if(buttonPress == 1){
     mode= 1;
   }
+  lcd.clear();
+  lcd.println("Standby         ");
 }
 
 
