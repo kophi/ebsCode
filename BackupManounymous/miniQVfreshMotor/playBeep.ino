@@ -140,7 +140,7 @@ int length;
 
 void playBeep(int soundtrack, float soundheight, int soundspeed)
 {
-return;
+
   if(soundspeed < 1)
   {
     soundspeed = 5000;

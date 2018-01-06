@@ -38,14 +38,29 @@ void Motor(int M1_DIR,int M1_EN,int M2_DIR,int M2_EN)//control the motor
   else
     analogWrite(EN2,M2_EN);
 }
-/*void displayLine() {
-  lcd.print(" Fuck The World");
-  lcd.setCursor(0,1);
-  lcd.print(" With Assembler");
+void readArrayData()
+{
+  for (int i=0; i<5; ++i)
+  {
+    data[i] = map(analogRead(i),400,900,1,0);     //AD Conversion
+  }
 }
-*/
-void lineFollow(){
-  if(data[2]==1 && direction!=STRAIGHT){
+void mLineFollow() {        //fährt der Linie nach
+  if (buttonPress == 1) {   //zurück ins menu
+    mode = M_MENU;
+    modeChanged = 1;
+    playBeep(1, (3 - buttonPress) * 2.0, 10);
+  }
+  else if (buttonPress == 3) { //standbybetrieb
+    mode = M_STANDBY;
+    modeChanged = 1;
+    playBeep(1, (3 - buttonPress) * 2.0, 10);
+  }
+  else {
+
+    modeChanged = 0;
+    readArrayData();
+    if(data[2]==1 && direction!=STRAIGHT){
     Motor(Forward,40,Forward,40);
     direction = STRAIGHT;
   }
@@ -65,20 +80,9 @@ void lineFollow(){
     Motor(Forward,40,Forward,10);
     direction = STRONGRIGHT;
   }
-}
-void readArrayData()
-{
-  for (int i=0; i<5; ++i)
-  {
-    data[i] = map(analogRead(i),400,900,1,0);     //AD Conversion
+    lcd.setCursor(0, 0);
+    lcd.println("Follow the light ");
+    lcd.setCursor(0, 1);
+    lcd.println("Walk the line   ");
   }
 }
-void setup() {
-  Serial.begin(9600);
-}
-void loop() {
-  readArrayData();
-  lineFollow();
-}
-
-
