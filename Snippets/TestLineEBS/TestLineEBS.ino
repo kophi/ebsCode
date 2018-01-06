@@ -73,7 +73,7 @@ void readArrayData()
 {
   for (int i=0; i<5; ++i)
   {
-    data[i] = map(analogRead(i),400,900,1,0);
+    data[i] = map(analogRead(i),400,900,1,0);     //AD Conversion
   }
 }
 void setup() {
