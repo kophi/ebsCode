@@ -40,7 +40,7 @@
 #define B5 932.328
 #define H5 987.767
 
-#define P 0      //Tonpause
+#define P 0       //Tonpause
 
 //Definition der Tondauer
 #define W 1        //Ganzton
@@ -55,19 +55,19 @@
 //--------------------------------------------------------------
 //Definition der Arrays für einfachen BEEP
 //Array der Tonfolge (Frequenz)
-int beeptone[]={A5};
+float beeptone[]={A5};
 //Array der Tondauer
-float beepduration[]={H};
+float beepduration[]={S};
 //--------------------------------------------------------------
 //Definition der Arrays für DREIFACHTON
 //Array der Tonfolge (Frequenz)
-int threetone[]={C4,G4,C5};
+float threetone[]={C4,G4,C5};
 //Array der Tondauer
 float threeduration[]={Q,Q,Q};
 //--------------------------------------------------------------
-//Definition der Arrays für TETRIS
+//Definition der Arrays für TETRIS-Theme
 //Array der Tonfolge (Frequenz)
-int tetristone[]=    
+float tetristone[]=    
 {
   E5,H4,C5,D5,C5,H4,  //Tackt1
   A4,A4,C5,E5,D5,C5,  //Tackt2
@@ -91,10 +91,10 @@ float tetrisduration[]=
   Q,Q,XS,Q,Q          //Tackt8
 };
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-//Definition der Arrays für STARWARS
+//Definition der Arrays für STARWARS-Theme (Imperial March)
 //Array der Tonfolge (Frequenz)
-int starwarstone[]=    
+
+float starwarstone[]=    
 {
   A4,P,A4,P,A4,F4,C5,             //Tackt1
   A4,F4,C5,A4,                    //Tackt2
@@ -117,23 +117,73 @@ float starwarsduration[]=
   S,S,EP,EP,Q,EP,S,               //Tackt7
   Q,EP,S,H                        //Tackt8
 };
-//--------------------------------------------------------------
-int soundspeed=1800;
-int soundheight=1;
-int finalsoundpause=2000;
+//-----------------------------------------------------------------------------------
+int finalsoundpause=0;
 int length;
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+//playBeep()
+//Stephanie Fernandez Andersson
+//v_6                 2017-12-18            variable Soundhöhe und Geschwindigkeit
+//
+//Auswahl des Soundtracks --> Zahl (int) zwischen 1 und 4
+//Wenn Auswahl <= 1 oder > 4 dann wird Track 1 gespielt
+//
+//Track 1: Einzelton
+//Track 2: Dreifachton
+//Track 3: Tetris Theme
+//Track 4: Imperial March 
+//
+//Abspielhöhe variabel --> Zahl (float) zwischen 1.0 und 10.0 (1.0 = tief und 10.0 = hoch)
+//
+//Abspielgeschwindigkeit variabel --> Zahl (int) zwischen 1 und 10 (1=langsam und 10 gleich schnell)
+//
 
-void playBeep(int soundtrack)  
+void playBeep(int soundtrack, float soundheight, int soundspeed)
 {
+
+  if(soundspeed < 1)
+  {
+    soundspeed = 5000;
+  }
+  else{
+    if(soundspeed > 10)
+    {
+      soundspeed = 1000;
+    }
+    else{
+      soundspeed = 5000-((soundspeed-1)*445);            //Umrechnung Soundgeschwindigkeit
+    }
+  }
+
+//Umrechnung der Soundhöhe
+//Bei Eingegebenen Zahlen kleiner 1 oder grösser 10 wird automaitsch ein fixer Minimal- bzw. Maximalwert definiert
+
+  if(soundheight < 1)
+  {
+    soundheight = 1;
+  }
+  else{
+    if(soundheight > 10)
+    {
+      soundheight = 1.5;
+    }
+    else
+    {
+      soundheight = 1.0+((soundheight-1)*0.6);
+    }
+  }
+  
+
+ //Auswahl des Soundtracks
+ //Bei Eingegebenen Zahlen kleiner 1 oder grösser 10 wird automaitsch ein fixer Minimal- bzw. Maximalwert definiert
   
   if (soundtrack<=1|soundtrack>4){
-    length=sizeof(beeptone)/sizeof(beeptone[0]);   //calculate the length of the array
+    length=sizeof(beeptone)/sizeof(beeptone[0]);                    //Arraylänge
  
     for(int x=0;x<length;x++)
      {
-     tone(tonepin,beeptone[x]);
-     delay(soundspeed*beepduration[x]);   //delay for some time for the rhythm
+     tone(tonepin,soundheight*beeptone[x]);
+     delay(soundspeed*beepduration[x]);
      noTone(tonepin);
      }
     
@@ -141,52 +191,37 @@ void playBeep(int soundtrack)
   else
   {
       if (soundtrack==2){
-        length=sizeof(threetone)/sizeof(threetone[0]);   //calculate the length of the array
+        length=sizeof(threetone)/sizeof(threetone[0]);              //Arraylänge
 
           for(int x=0;x<length;x++)
           {
-            tone(tonepin,threetone[x]);
-            delay(soundspeed*threeduration[x]);   //delay for some time for the rhythm
+            tone(tonepin,soundheight*threetone[x]);                 //Ton
+            delay(soundspeed*threeduration[x]);                     //Rhytmus
             noTone(tonepin);
           }
       }
       else{
         if(soundtrack==3){      
-          length=sizeof(tetristone)/sizeof(tetristone[0]);   //calculate the length of the array
+          length=sizeof(tetristone)/sizeof(tetristone[0]);          //Arraylänge
 
           for(int x=0;x<length;x++)
           {
-            tone(tonepin,tetristone[x]);
-            delay(soundspeed*tetrisduration[x]);   //delay for some time for the rhythm
+            tone(tonepin,soundheight*tetristone[x]);                //Ton
+            delay(soundspeed*tetrisduration[x]);                    //Rhytmus
             noTone(tonepin);
           }
         }
         else{
-          length=sizeof(starwarstone)/sizeof(starwarstone[0]);   //calculate the length of the array
+          length=sizeof(starwarstone)/sizeof(starwarstone[0]);      //Arraylänge
 
           for(int x=0;x<length;x++)
           {
-            tone(tonepin,starwarstone[x]);
-            delay(soundspeed*1.5*starwarsduration[x]);   //delay for some time for the rhythm
+            tone(tonepin,soundheight*starwarstone[x]);              //Ton
+            delay(soundspeed*starwarsduration[x]);                  //Rhytmus   
             noTone(tonepin);
           }
          }
       }
   }
-    delay(finalsoundpause);
+    delay(finalsoundpause);                                         //Pause (defaultwert = 0)
 }
-
-void setup()
-{
-  pinMode(tonepin,OUTPUT);
-}
-
-void loop()
-{
-  playBeep(1);
-  playBeep(2);
-  playBeep(3);
-  playBeep(4);
-}
-
-
