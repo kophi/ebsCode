@@ -6,7 +6,7 @@ void mMenu() {            //startet das Menu zeigt es auf dem LCD an
   if (buttonPress == 1) { //LineFollow&Licht&LCD&Motors
     mode = M_LINEFOLLOW;
     modeChanged = 1;
-    playBeep(1, (3 - buttonPress) * 2.0, 10);
+    //playBeep(1, (3 - buttonPress) * 2.0, 10);
   }
   if (buttonPress == 2) { //Licht&Ton&LCD
     mode = M_BRIGHTNESS;

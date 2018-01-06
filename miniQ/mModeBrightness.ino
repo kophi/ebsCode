@@ -17,19 +17,23 @@ void mBrightness() {            //misst die Helligkeit, zeigt diese auf dem LCD 
       modeChanged = 0;
     }
     
-    if (currentMillis - previousMillis > 500) {
+    //showBrightness(500);
+
+     if (currentMillis - previousMillis > 500) {
       //Serial.println("BRIGHTNESS_PRE: ");
       //Serial.println(millis());
       previousMillis = currentMillis;
 
       int brightVal = getBrightnessValue();
       sprintf(lcdVal, "%04d",brightVal);
+
+      //playBeeep();
        
       lcd.home();
       lcd.print(lcdVal);
       //Serial.println("BRIGHTNESS_POST: ");
       //Serial.println(millis());
-    }
+    } 
 
     /*
       lcd.setCursor(0, 0);
@@ -39,3 +43,23 @@ void mBrightness() {            //misst die Helligkeit, zeigt diese auf dem LCD 
     */
   }
 }
+
+void showBrightness(int interval)
+{
+ if (currentMillis - previousMillis > interval) {
+      //Serial.println("BRIGHTNESS_PRE: ");
+      //Serial.println(millis());
+      previousMillis = currentMillis;
+
+      int brightVal = getBrightnessValue();
+      sprintf(lcdVal, "%04d",brightVal);
+
+      
+       
+      lcd.home();
+      lcd.print(lcdVal);
+      //Serial.println("BRIGHTNESS_POST: ");
+      //Serial.println(millis());
+    } 
+}
+

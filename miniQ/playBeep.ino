@@ -1,44 +1,44 @@
 #define tonepin 16
 
 //Definition der Frequenzen der einzelnen Töne
-#define C3 130.813
-#define CIS3 138.591
-#define D3 146.832
-#define DIS3 155.563
-#define E3 164.814
-#define F3 174.614
-#define FIS3 184.997
-#define G3 195.998
-#define GIS3 207.652
-#define A3 220.000
-#define B3 233.082
-#define H3 246.942
+#define TONE_C3 130.813
+#define TONE_CIS3 138.591
+#define TONE_D3 146.832
+#define TONE_DIS3 155.563
+#define TONE_E3 164.814
+#define TONE_F3 174.614
+#define TONE_FIS3 184.997
+#define TONE_G3 195.998
+#define TONE_GIS3 207.652
+#define TONE_A3 220.000
+#define TONE_B3 233.082
+#define TONE_H3 246.942
 
-#define C4 261.626
-#define CIS4 277.183
-#define D4 293.665
-#define DIS4 311.127
-#define E4 329.628
-#define F4 349.228
-#define FIS4 369.994
-#define G4 391.995
-#define GIS4 415.305
-#define A4 440.000
-#define B4 466.164
-#define H4 493.883
+#define TONE_C4 261.626
+#define TONE_CIS4 277.183
+#define TONE_D4 293.665
+#define TONE_DIS4 311.127
+#define TONE_E4 329.628
+#define TONE_F4 349.228
+#define TONE_FIS4 369.994
+#define TONE_G4 391.995
+#define TONE_GIS4 415.305
+#define TONE_A4 440.000
+#define TONE_B4 466.164
+#define TONE_H4 493.883
 
-#define C5 523.251
-#define CIS5 554.365
-#define D5 587.330
-#define DIS5 622.254
-#define E5 659.255
-#define F5 698.456
-#define FIS5 739.989
-#define G5 783.991
-#define GIS5 830.609
-#define A5 880.00
-#define B5 932.328
-#define H5 987.767
+#define TONE_C5 523.251
+#define TONE_CIS5 554.365
+#define TONE_D5 587.330
+#define TONE_DIS5 622.254
+#define TONE_E5 659.255
+#define TONE_F5 698.456
+#define TONE_FIS5 739.989
+#define TONE_G5 783.991
+#define TONE_GIS5 830.609
+#define TONE_A5 880.00
+#define TONE_B5 932.328
+#define TONE_H5 987.767
 
 #define P 0       //Tonpause
 
@@ -55,13 +55,13 @@
 //--------------------------------------------------------------
 //Definition der Arrays für einfachen BEEP
 //Array der Tonfolge (Frequenz)
-float beeptone[]={A5};
+float beeptone[]={TONE_A5};
 //Array der Tondauer
 float beepduration[]={S};
 //--------------------------------------------------------------
 //Definition der Arrays für DREIFACHTON
 //Array der Tonfolge (Frequenz)
-float threetone[]={C4,G4,C5};
+float threetone[]={TONE_C4,TONE_G4,TONE_C5};
 //Array der Tondauer
 float threeduration[]={Q,Q,Q};
 //--------------------------------------------------------------
@@ -69,14 +69,14 @@ float threeduration[]={Q,Q,Q};
 //Array der Tonfolge (Frequenz)
 float tetristone[]=    
 {
-  E5,H4,C5,D5,C5,H4,  //Tackt1
-  A4,A4,C5,E5,D5,C5,  //Tackt2
-  H4,H4,C5,D5,E5,     //Tackt3
-  C5,A4,P,A4,P,       //Tackt4
-  P,D5,F5,A5,G5,F5,   //Tackt5
-  E5,C5,E5,D5,C5,     //Tackt6
-  H4,H4,C5,D5,E5,     //Tackt7
-  C5,A4,P,A4,P        //Tackt8
+  TONE_E5,TONE_H4,TONE_C5,TONE_D5,TONE_C5,TONE_H4,  //Tackt1
+  TONE_A4,TONE_A4,TONE_C5,TONE_E5,TONE_D5,TONE_C5,  //Tackt2
+  TONE_H4,TONE_H4,TONE_C5,TONE_D5,TONE_E5,     //Tackt3
+  TONE_C5,TONE_A4,P,TONE_A4,P,       //Tackt4
+  P,TONE_D5,TONE_F5,TONE_A5,TONE_G5,TONE_F5,   //Tackt5
+  TONE_E5,TONE_C5,TONE_E5,TONE_D5,TONE_C5,     //Tackt6
+  TONE_H4,TONE_H4,TONE_C5,TONE_D5,TONE_E5,     //Tackt7
+  TONE_C5,TONE_A4,P,TONE_A4,P        //Tackt8
 };
 //Array der Tondauer
 float tetrisduration[]=
@@ -96,14 +96,14 @@ float tetrisduration[]=
 
 float starwarstone[]=    
 {
-  A4,P,A4,P,A4,F4,C5,             //Tackt1
-  A4,F4,C5,A4,                    //Tackt2
-  E5,P,E5,P,E5,F5,C5,             //Tackt3
-  GIS4,F4,C5,A4,                  //Tackt4
-  A5,A4,P,A4,A5,GIS5,G5,          //Tackt5
-  FIS5,F5,FIS5,B4,DIS5,D5,CIS5,   //Tackt6
-  C5,H4,C5,F4,GIS4,F4,GIS4,       //Tackt7
-  C5,A4,C5,E5                     //Tackt8
+  TONE_A4,P,TONE_A4,P,TONE_A4,TONE_F4,TONE_C5,             //Tackt1
+  TONE_A4,TONE_F4,TONE_C5,TONE_A4,                    //Tackt2
+  TONE_E5,P,TONE_E5,P,TONE_E5,TONE_F5,TONE_C5,             //Tackt3
+  TONE_GIS4,TONE_F4,TONE_C5,TONE_A4,                  //Tackt4
+  TONE_A5,TONE_A4,P,TONE_A4,TONE_A5,TONE_GIS5,TONE_G5,          //Tackt5
+  TONE_FIS5,TONE_F5,TONE_FIS5,TONE_B4,TONE_DIS5,TONE_D5,TONE_CIS5,   //Tackt6
+  TONE_C5,TONE_H4,TONE_C5,TONE_F4,TONE_GIS4,TONE_F4,TONE_GIS4,       //Tackt7
+  TONE_C5,TONE_A4,TONE_C5,TONE_E5                     //Tackt8
 };
 //Array der Tondauer
 float starwarsduration[]=
@@ -138,9 +138,14 @@ int length;
 //Abspielgeschwindigkeit variabel --> Zahl (int) zwischen 1 und 10 (1=langsam und 10 gleich schnell)
 //
 
+void playBeeep()
+{
+  tone(tonepin,TONE_A5,100);
+}
+
 void playBeep(int soundtrack, float soundheight, int soundspeed)
 {
-return;
+  return;
   if(soundspeed < 1)
   {
     soundspeed = 5000;
@@ -183,7 +188,7 @@ return;
     for(int x=0;x<length;x++)
      {
      tone(tonepin,soundheight*beeptone[x]);
-     delay(soundspeed*beepduration[x]);
+     //delay(soundspeed*beepduration[x]);
      noTone(tonepin);
      }
     
@@ -196,7 +201,7 @@ return;
           for(int x=0;x<length;x++)
           {
             tone(tonepin,soundheight*threetone[x]);                 //Ton
-            delay(soundspeed*threeduration[x]);                     //Rhytmus
+            //delay(soundspeed*threeduration[x]);                     //Rhytmus
             noTone(tonepin);
           }
       }
@@ -207,7 +212,7 @@ return;
           for(int x=0;x<length;x++)
           {
             tone(tonepin,soundheight*tetristone[x]);                //Ton
-            delay(soundspeed*tetrisduration[x]);                    //Rhytmus
+            //delay(soundspeed*tetrisduration[x]);                    //Rhytmus
             noTone(tonepin);
           }
         }
@@ -217,11 +222,11 @@ return;
           for(int x=0;x<length;x++)
           {
             tone(tonepin,soundheight*starwarstone[x]);              //Ton
-            delay(soundspeed*starwarsduration[x]);                  //Rhytmus   
+            //delay(soundspeed*starwarsduration[x]);                  //Rhytmus   
             noTone(tonepin);
           }
          }
       }
   }
-    delay(finalsoundpause);                                         //Pause (defaultwert = 0)
+    //delay(finalsoundpause);                                         //Pause (defaultwert = 0)
 }

@@ -47,11 +47,13 @@ void readArrayData()
 }
 void mLineFollow() {        //fährt der Linie nach
   if (buttonPress == 1) {   //zurück ins menu
+    Motor(Forward,0,Forward,0);
     mode = M_MENU;
     modeChanged = 1;
     playBeep(1, (3 - buttonPress) * 2.0, 10);
   }
   else if (buttonPress == 3) { //standbybetrieb
+    Motor(Forward,0,Forward,0);
     mode = M_STANDBY;
     modeChanged = 1;
     playBeep(1, (3 - buttonPress) * 2.0, 10);
@@ -60,6 +62,10 @@ void mLineFollow() {        //fährt der Linie nach
 
     modeChanged = 0;
     readArrayData();
+
+
+
+    
     if(data[2]==1 && direction!=STRAIGHT){
     Motor(Forward,40,Forward,40);
     direction = STRAIGHT;
@@ -80,9 +86,6 @@ void mLineFollow() {        //fährt der Linie nach
     Motor(Forward,40,Forward,10);
     direction = STRONGRIGHT;
   }
-    lcd.setCursor(0, 0);
-    lcd.println("Follow the light ");
-    lcd.setCursor(0, 1);
-    lcd.println("Walk the line   ");
+    showBrightness(500);
   }
 }
