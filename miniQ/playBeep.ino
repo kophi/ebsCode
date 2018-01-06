@@ -57,7 +57,7 @@
 //Array der Tonfolge (Frequenz)
 float beeptone[]={A5};
 //Array der Tondauer
-float beepduration[]={H};
+float beepduration[]={S};
 //--------------------------------------------------------------
 //Definition der Arrays für DREIFACHTON
 //Array der Tonfolge (Frequenz)
