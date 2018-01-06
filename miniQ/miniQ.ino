@@ -20,13 +20,17 @@
 #define M_LINEFOLLOW 2
 #define M_BRIGHTNESS 3
 
-int buttonPress = 0;
+
+LiquidCrystal_I2C lcd(0x20, 16, 2);
+
+unsigned int buttonPress = 0;
 int lastButton = 0;
 int mode = M_STANDBY;
 int modeChanged = 1;
+long previousMillis = 0;
+unsigned long currentMillis = 0;
 
-int run;
-LiquidCrystal_I2C lcd(0x20, 16, 2);
+
 
 /**************************************************
    Setup Routine
@@ -36,15 +40,19 @@ void setup() {
   lcd.init();
   lcd.backlight();
 }
-  /**************************************************
-     Hauptschleife
-  */
+/**************************************************
+   Hauptschleife
+*/
 void loop() {
   detectButton();
-  /*Serial.print("buttonPress :");
-    Serial.println(buttonPress);
-    Serial.print("mode:        ");
-    Serial.println(mode);*/
+
+  currentMillis = millis();
+
+  if(modeChanged)
+  {
+    lcd.clear();
+  }
+
 
   if (mode == M_LINEFOLLOW) { //Mode: LineFollow
     mLineFollow();
@@ -58,5 +66,7 @@ void loop() {
   else { //Mode: Standby(Default Mode)
     mStandby();
   }
+
+  
 
 }

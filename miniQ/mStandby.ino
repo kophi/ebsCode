@@ -6,9 +6,7 @@ void mStandby()
   }
   if (modeChanged)
   {
-    lcd.clear();
     lcd.print("Standby");
-    lcd.setCursor(0, 1);
     lcd.print("Press KEY1");
     modeChanged = 0;
     //lcd.noBacklight();
