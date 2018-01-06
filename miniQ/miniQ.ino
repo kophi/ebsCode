@@ -51,6 +51,7 @@ void loop() {
   if(modeChanged)
   {
     lcd.clear();
+    Serial.println("CLEAR");
   }
 
 
