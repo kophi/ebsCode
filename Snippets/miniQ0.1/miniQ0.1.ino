@@ -14,8 +14,11 @@
 #define analogKey2 600
 #define analogKey3 750
 #define analogNone 1020
-int buttonPress;
+int buttonPress = 0;
+int lastButton = 0;
 int mode= 3;
+int modeChanged = 1;
+
 int run;
 LiquidCrystal_I2C lcd(0x20, 16, 2);
 /***********************************************
@@ -28,24 +31,33 @@ void detectButton(){          //erkennt welcher Key (1-3) gedrückt worden ist
   if(analogButton<analogKey1){
     buttonPress= 1;
         //play beep1
-    delay(300);           //Zeit zum loslassen des Tasters
+              //Zeit zum loslassen des Tasters
   }
   else if(analogButton< analogKey2){
     buttonPress= 2;
         //play beep2
-    delay(300);           //Zeit zum loslassen des Tasters
+              //Zeit zum loslassen des Tasters
   }
   else if(analogButton<analogKey3){
     buttonPress= 3;
         //play beep3
-    delay(300);           //Zeit zum loslassen des Tasters  
+              //Zeit zum loslassen des Tasters  
   }
+ }
+ if(buttonPress == lastButton)
+ {
+  buttonPress = 0;
+ }
+ else
+ {
+  lastButton = buttonPress;
  }
 }
 //--------------------------------------------------
 void mLineFollow(){         //fährt der Linie nach
   if(buttonPress==1){       //zurück ins menu
     mode = 1;
+    modeChanged=1;
   }
   else if(buttonPress==3){  //standbybetrieb
   mode= 3;
@@ -66,13 +78,16 @@ void mMenu(){             //startet das Menu zeigt es auf dem LCD an
   lcd.println("Press KEY 1/2/3 ");
   if(buttonPress==1){     //LineFollow&Licht&LCD&Motors
     mode=0;
+    modeChanged=1;
   }
   if(buttonPress==2){     //Licht&Ton&LCD
     mode=2;
+    modeChanged=1;
   }
   if(buttonPress==3){     //Menu beenden -->Standbybetrieb
     lcd.clear();
     mode= 3;
+    modeChanged=1;
  }
  
 }
@@ -80,9 +95,11 @@ void mMenu(){             //startet das Menu zeigt es auf dem LCD an
 void mHell(){             //misst die Helligkeit, zeigt diese auf dem LCD an
   if(buttonPress==1){
     mode = 1;
+    modeChanged=1;
   }
   else if(buttonPress==3){  //standbybetrieb
-  mode= 3;
+    mode= 3;
+    modeChanged=1;
   }
   else{
   lcd.setCursor(0,0);
@@ -117,7 +134,8 @@ if (mode == 0){//LineFollow
   
  }
  else if (mode == 1){//menuMode
-  delay(300);  //Zeit zum loslassen des Tasters
+  
+    //Zeit zum loslassen des Tasters
   mMenu();
   
  }
@@ -128,10 +146,15 @@ else if(mode == 3){//Standby
   if(buttonPress == 1){
     mode= 1;
   }
-  lcd.clear();
-  lcd.println("Standby         ");
+  if(modeChanged)
+  {
+    lcd.clear();
+    lcd.println("Standby         ");
+    modeChanged = 0;
+    
+  }
 }
 
 
-buttonPress=0;
+
 }

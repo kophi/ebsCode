@@ -79,8 +79,19 @@ void lineFollow(){
 }
 void loop() {
   readArrayData();
-  lineFollow();
-  Serial.println(direction);
+  //lineFollow();
+  //Serial.println(direction);
+  
+  Serial.print("Data: ");
+  for (int i = 0; i<5; ++i)
+  {
+    Serial.print(data[i]);
+    Serial.print(",");
+  }
+  Serial.println("");
+  
+  delay(100);
+  
   
 
 }
