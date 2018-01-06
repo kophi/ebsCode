@@ -106,11 +106,12 @@ void setup() {
 }
 void loop() {
 detectButton(); 
-Serial.print("buttonPress :");
+/*Serial.print("buttonPress :");
 Serial.println(buttonPress);
 Serial.print("mode:        ");
 Serial.println(mode);
-
+DDRA= 0xff;
+*/
 //delay(1000); //nur für Serial Monitor auslesung!!
 if (mode == 0){//LineFollow
   mLineFollow();
@@ -129,7 +130,7 @@ else if(mode == 3){//Standby
     mode= 1;
   }
   lcd.clear();
-  lcd.println("Standby         ");
+  lcd.println("Standby         ");//hier kein Print machen!!!
 }
 
 

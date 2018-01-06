@@ -1,37 +1,31 @@
 #include <LiquidCrystal_I2C.h>
+#include <Wire.h>
 LiquidCrystal_I2C lcd(0x20, 16, 2);
 
-byte light[8];
+byte light[9];
 uint8_t val = 3;
 
-uint8_t duck[8]  = {0x0, 0xc, 0x1d, 0xf, 0xf, 0x6, 0x0};
+byte smiley[8] = {
+  B00000,
+  B10001,
+  B00000,
+  B00000,
+  B10001,
+  B01110,
+  B00000,
+};
 
-void printArray(){
-  for(int i= 7; i>= 0; --i){
-    lcd.setCursor(0, 0);
-    lcd.createChar(0, duck);
-    //lcd.write(byte(0));
-    Serial.println(light[i]);
-  }
-  
-  
- 
-}
 void setup() {
-  Serial.begin(9600);
   lcd.init();
   lcd.backlight();
-
-int iVal= val;
-for(int i=7; iVal >= 0; --i){
-  --iVal;
-  light[i]= 0b11111;
-}
-
+  
+  lcd.createChar(0, smiley);
+  lcd.write(smiley);
+    
+  
 }
 
 void loop() {
-  delay(1000);
-   printArray();
+  //lcd.println("smiley");
+  }
 
-}
