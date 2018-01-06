@@ -1,6 +1,5 @@
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x20, 16, 2);
-int data[5] = {};
+
+
 
 #define LEFT 1
 #define STRAIGHT 2
@@ -16,16 +15,9 @@ int data[5] = {};
 
 #define Forward 0      // value for forward
 #define Back 1         //value for go back
+int data[5];
 int direction = 0;
 
-
-void setup() {
-  Serial.begin(9600);
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(0,0);
-  
-}
 
 void Motor(int M1_DIR,int M1_EN,int M2_DIR,int M2_EN)//control the motor
 {
@@ -49,53 +41,34 @@ void Motor(int M1_DIR,int M1_EN,int M2_DIR,int M2_EN)//control the motor
   else
     analogWrite(EN2,M2_EN);
 }
-void displayLine() {
+/*void displayLine() {
   lcd.print(" Fuck The World");
   lcd.setCursor(0,1);
   lcd.print(" With Assembler");
 }
+*/
 void lineFollow(){
   if(data[2]==1 && direction!=STRAIGHT){
-    //Drive Straight
-    Motor(Forward,60,Forward,60);
+    Motor(Forward,40,Forward,40);
     direction = STRAIGHT;
   }
-  else if(data[1]==1 && direction!=LEFT){//Left
+  else if(data[1]==1 && direction!=LEFT){
     direction = LEFT;
-    Motor(Forward,50,Forward,65);
+    Motor(Forward,35,Forward,40);
   }
-  else if(data[3]==1 && direction!=RIGHT){//Right
-    Motor(Forward,65,Forward,50);
+  else if(data[3]==1 && direction!=RIGHT){
+    Motor(Forward,40,Forward,35);
     direction = RIGHT;
   }
-  else if(data[0]==1 && direction!=STRONGLEFT){//Strong Left
-     Motor(Forward,30,Forward,65);
+  else if(data[0]==1 && direction!=STRONGLEFT){
+     Motor(Forward,10,Forward,40);
      direction = STRONGLEFT;
   }
-  else if(data[4]==1 && direction!=STRONGRIGHT){//Strong Right
-    Motor(Forward,65,Forward,30);
+  else if(data[4]==1 && direction!=STRONGRIGHT){
+    Motor(Forward,40,Forward,10);
     direction = STRONGRIGHT;
   }
 }
-void loop() {
-  readArrayData();
-  //lineFollow();
-  //Serial.println(direction);
-  
-  Serial.print("Data: ");
-  for (int i = 0; i<5; ++i)
-  {
-    Serial.print(data[i]);
-    Serial.print(",");
-  }
-  Serial.println("");
-  
-  delay(100);
-  
-  
-
-}
-
 void readArrayData()
 {
   for (int i=0; i<5; ++i)
@@ -103,4 +76,12 @@ void readArrayData()
     data[i] = map(analogRead(i),400,900,1,0);
   }
 }
+void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  readArrayData();
+  lineFollow();
+}
+
 
