@@ -1,5 +1,6 @@
 #define tonepin 16
 
+
 //Definition der Frequenzen der einzelnen Töne
 #define TONE_C3 130.813
 #define TONE_CIS3 138.591
@@ -229,4 +230,15 @@ void playBeep(int soundtrack, float soundheight, int soundspeed)
       }
   }
     //delay(finalsoundpause);                                         //Pause (defaultwert = 0)
+}
+
+void simpleBeep(){
+  
+  for(int i= 0; i<30;i++){
+  digitalWrite(16, HIGH);
+  delay(2);
+  digitalWrite(16, LOW);
+  delay(2);
+  }
+  
 }

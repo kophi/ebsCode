@@ -39,6 +39,7 @@ void setup() {
   Serial.begin(9600);
   lcd.init();
   lcd.backlight();
+  pinMode(16, OUTPUT);
 }
 /**************************************************
    Hauptschleife
