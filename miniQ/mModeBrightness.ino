@@ -1,3 +1,5 @@
+char lcdVal[4];
+
 void mBrightness() {            //misst die Helligkeit, zeigt diese auf dem LCD an
   if (buttonPress == 1) {
     mode = M_MENU;
@@ -10,6 +12,10 @@ void mBrightness() {            //misst die Helligkeit, zeigt diese auf dem LCD 
     playBeep(1, (3 - buttonPress) * 2.0, 10);
   }
   else {
+    if(modeChanged)
+    {
+      modeChanged = 0;
+    }
     
     if (currentMillis - previousMillis > 500) {
       //Serial.println("BRIGHTNESS_PRE: ");
@@ -17,11 +23,8 @@ void mBrightness() {            //misst die Helligkeit, zeigt diese auf dem LCD 
       previousMillis = currentMillis;
 
       int brightVal = getBrightnessValue();
-      char lcdVal[6];
       sprintf(lcdVal, "%04d",brightVal);
-  
-      
-      //lcd.clear();
+       
       lcd.home();
       lcd.print(lcdVal);
       //Serial.println("BRIGHTNESS_POST: ");

@@ -6,9 +6,13 @@ void mLineFollow() {        //fährt der Linie nach
   }
   else if (buttonPress == 3) { //standbybetrieb
     mode = M_STANDBY;
+    modeChanged = 1;
     playBeep(1, (3 - buttonPress) * 2.0, 10);
   }
   else {
+
+    modeChanged = 0;
+    
     //code für Linefollowing
     lcd.setCursor(0, 0);
     lcd.println("Follow the light ");
