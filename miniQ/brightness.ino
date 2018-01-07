@@ -2,7 +2,12 @@
 
 unsigned long brightnessMillis = 0;
 unsigned int brightnessValue;
+unsigned int brightnessPercent;
 char lcdValue[3];
+
+long currentMicros;
+long previousMicros;
+int tuneValue;
 
 int getBrightnessValue()
 {
@@ -24,12 +29,16 @@ void mBrightness() {
   }
   else {
 
+    brightnessValue = getBrightnessValue();
+
+    beep(1023-brightnessValue);
+        
     if (currentMillis - brightnessMillis > BRIGHTNESS_INTERVAL) {
       brightnessMillis = currentMillis;
-      
-      brightnessValue = map(getBrightnessValue(),0,1023,0,100);
+     
+      brightnessPercent = map(brightnessValue,0,1023,0,100);
 
-      sprintf(lcdValue,"%03d", brightnessValue);
+      sprintf(lcdValue,"%03d", brightnessPercent);
 
       lcd.setCursor(0, 1);
       lcd.print(lcdValue);

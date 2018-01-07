@@ -34,20 +34,24 @@ unsigned int lastKey = 0;
 unsigned int mode = M_STANDBY;
 boolean modeChanged = true;
 unsigned long currentMillis = 0;
+unsigned long startMillis = 0;
 unsigned int keyValue = 0;
 
 void simpleBeep() {
-  beep(1);
+  beep(1000);
 }
 
 void beep(int freq)
 {
-  for (int i = 0; i < 30; i++) {
+  startMillis = millis();
+  do
+  {
     digitalWrite(PIN_SPEAKER, HIGH);
-    delay(freq);
+    delayMicroseconds(freq);
     digitalWrite(PIN_SPEAKER, LOW);
-    delay(freq);
+    delayMicroseconds(freq);
   }
+  while (millis() - startMillis < 200);
 }
 
 void detectKeyPress() {         //erkennt welcher Key (1-3) gedrückt worden ist
@@ -117,7 +121,7 @@ void setup() {
    Hauptschleife
 */
 void loop() {
-  
+
   detectKeyPress();
 
   currentMillis = millis();
