@@ -87,6 +87,5 @@ void mLineFollow() {        //fährt der Linie nach
       Motor(Forward, 40, Forward, 10);
       direction = STRONGRIGHT;
     }
-    showBrightness(500);
   }
 }
