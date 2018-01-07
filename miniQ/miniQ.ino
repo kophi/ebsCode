@@ -51,7 +51,7 @@ void beep(int freq)
     digitalWrite(PIN_SPEAKER, LOW);
     delayMicroseconds(freq);
   }
-  while (millis() - startMillis < 200);
+  while (millis() - startMillis < 100);
 }
 
 void detectKeyPress() {         //erkennt welcher Key (1-3) gedrückt worden ist
