@@ -1,5 +1,6 @@
 #define BRIGHTNESS_INTERVAL 500
 
+unsigned long brightnessMillis = 0;
 unsigned int brightnessValue;
 char lcdValue[3];
 
@@ -23,12 +24,12 @@ void mBrightness() {
   }
   else {
 
-    if (currentMillis - previousMillis > BRIGHTNESS_INTERVAL) {
-      previousMillis = currentMillis;
+    if (currentMillis - brightnessMillis > BRIGHTNESS_INTERVAL) {
+      brightnessMillis = currentMillis;
       
-      int brightnessValue = getBrightnessValue();
+      brightnessValue = map(getBrightnessValue(),0,1023,0,100);
 
-      sprintf(lcdValue,"%03d", map(brightnessValue,0,1023,0,100));
+      sprintf(lcdValue,"%03d", brightnessValue);
 
       lcd.setCursor(0, 1);
       lcd.print(lcdValue);

@@ -24,7 +24,7 @@
 #define M_LINEFOLLOW 2
 #define M_BRIGHTNESS 3
 
-#define DEBUG true
+#define DEBUG false
 
 
 LiquidCrystal_I2C lcd(0x20, 16, 2);
@@ -33,16 +33,20 @@ unsigned int currentKey = 0;
 unsigned int lastKey = 0;
 unsigned int mode = M_STANDBY;
 boolean modeChanged = true;
-unsigned long previousMillis = 0;
 unsigned long currentMillis = 0;
 unsigned int keyValue = 0;
 
 void simpleBeep() {
+  beep(1);
+}
+
+void beep(int freq)
+{
   for (int i = 0; i < 30; i++) {
     digitalWrite(PIN_SPEAKER, HIGH);
-    delay(2);
+    delay(freq);
     digitalWrite(PIN_SPEAKER, LOW);
-    delay(2);
+    delay(freq);
   }
 }
 

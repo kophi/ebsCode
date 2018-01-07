@@ -1,91 +1,147 @@
-#define LEFT 1
-#define STRAIGHT 2
-#define RIGHT 3
-#define STRONGLEFT 5
-#define STRONGRIGHT 4
+#define FOLLOW_INTERVAL 2
+#define LCD_INTERVAL 300
 
-#define EN1 5//pin for run the left motor 
-#define IN1 12//pin for control left motor direction
-#define EN2 6//pin for run the right motor 
-#define IN2 7//pin for control right motor direction
+#define SPEED_MAX 40
+#define SPEED_MID 35
+#define SPEED_MIN 10
+#define SPEED_STOP 0
+
+#define DIRECTION_LEFT 1
+#define DIRECTION_STRAIGHT 2
+#define DIRECTION_RIGHT 3
+#define DIRECTION_STRONGLEFT 5
+#define DIRECTION_STRONGRIGHT 4
+
+#define PIN_MOTOR_LEFT_SPEED 5
+#define PIN_MOTOR_LEFT_DIRECTION 12
+#define PIN_MOTOR_RIGHT_SPEED 6
+#define PIN_MOTOR_RIGHT_DIRECTION 7
 
 
-#define Forward 0      // value for forward
-#define Back 1         //value for go back
-int data[5];
-int direction = 0;
+unsigned long followMillis = 0;
+unsigned long lcdMillis = 0;
+int direction;
+char lineString[5] = {'-','-','-','-','-'};
 
-
-void Motor(int M1_DIR, int M1_EN, int M2_DIR, int M2_EN) //control the motor
+int getLineValue(unsigned int sensorIdx)
 {
-  //////////M1-->left motor////////////////////////
-  if (M1_DIR == Forward) //distinguish the command
-    digitalWrite(IN1, Forward);
-  else
-    digitalWrite(IN1, Back);
-  if (M1_EN == 0)
-    analogWrite(EN1, LOW);
-  else
-    analogWrite(EN1, M1_EN);
-
-  ///////////M2-->right motor//////////////////////
-  if (M2_DIR == Forward)
-    digitalWrite(IN2, Forward);
-  else
-    digitalWrite(IN2, Back);
-  if (M2_EN == 0)
-    analogWrite(EN2, LOW);
-  else
-    analogWrite(EN2, M2_EN);
-}
-
-void stopMotor()
-{
-  Motor(Forward, 0, Forward, 0);
-}
-void readArrayData()
-{
-  for (int i = 0; i < 5; ++i)
-  {
-    data[i] = map(analogRead(i), 400, 900, 1, 0); //AD Conversion
+  if (sensorIdx < 5) {
+    if (analogRead(sensorIdx) >= 500)
+    {
+      return 0;
+    }
+    else {
+      return 1;
+    }
+    /*
+      Serial.print("Val ");
+      Serial.print(sensorIdx);
+      Serial.print(": ");
+      Serial.print(x);
+      Serial.print(" -> ");
+      Serial.println(y);
+    */
   }
 }
-void mLineFollow() {        //fährt der Linie nach
+
+void setMotors(int speedLeft, int speedRight)
+{
+  analogWrite(PIN_MOTOR_LEFT_SPEED, speedLeft);
+  analogWrite(PIN_MOTOR_RIGHT_SPEED, speedRight);
+
+  //Serial.print(speedLeft);
+  //Serial.print(",");
+  //Serial.println(speedRight);
+}
+
+void stopMotors()
+{
+  setMotors(LOW, LOW);
+}
+
+void mLineFollow() {
   if (modeChanged)
   {
     modeChanged = false;
+
+    lcd.print("Line pos: ");
+    lcd.setCursor(0, 1);
+    lcd.print("Rel. bright: ");
+
+    digitalWrite(PIN_MOTOR_LEFT_DIRECTION, 0);
+    digitalWrite(PIN_MOTOR_RIGHT_DIRECTION, 0);
   }
   else if (currentKey == 1) {   //zurück ins menu
-    stopMotor();
+    stopMotors();
     changeMode(M_MENU);
   }
   else if (currentKey == 3) { //standbybetrieb
-    stopMotor();
+    stopMotors();
     changeMode(M_STANDBY);
   }
   else {
-    
-    readArrayData();
+    /*
+      Serial.print(getLineValue(0));
+      Serial.print(",");
+      Serial.print(getLineValue(1));
+      Serial.print(",");
+      Serial.print(getLineValue(2));
+      Serial.print(",");
+      Serial.print(getLineValue(3));
+      Serial.print(",");
+      Serial.println(getLineValue(4));
+    */
+    if (currentMillis - followMillis > FOLLOW_INTERVAL) {
+      followMillis = currentMillis;
 
-    if (data[2] == 1 && direction != STRAIGHT) {
-      Motor(Forward, 40, Forward, 40);
-      direction = STRAIGHT;
+      if (getLineValue(2) == 1 && direction != DIRECTION_STRAIGHT) {
+        setMotors(SPEED_MAX, SPEED_MAX);
+        direction = DIRECTION_STRAIGHT;
+      }
+      else if (getLineValue(1) == 1 && direction != DIRECTION_LEFT) {
+        direction = DIRECTION_LEFT;
+        setMotors(SPEED_MID, SPEED_MAX);
+      }
+      else if (getLineValue(3) == 1 && direction != DIRECTION_RIGHT) {
+        setMotors(SPEED_MAX, SPEED_MID);
+        direction = DIRECTION_RIGHT;
+      }
+      else if (getLineValue(0) == 1 && direction != DIRECTION_STRONGLEFT) {
+        setMotors(SPEED_MIN, SPEED_MAX);
+        direction = DIRECTION_STRONGLEFT;
+      }
+      else if (getLineValue(4) == 1 && direction != DIRECTION_STRONGRIGHT) {
+        setMotors(SPEED_MAX, SPEED_MIN);
+        direction = DIRECTION_STRONGRIGHT;
+      }
     }
-    else if (data[1] == 1 && direction != LEFT) {
-      direction = LEFT;
-      Motor(Forward, 35, Forward, 40);
+
+    if (currentMillis - lcdMillis > LCD_INTERVAL) {
+      lcdMillis = currentMillis;
+
+      brightnessValue = map(getBrightnessValue(),0,1023,0,100);
+      
+      for (int i = 0; i < 5; ++i)
+      {
+        if(i == direction)
+        {
+          lineString[i] = 'x';
+        }
+        else
+        {
+          lineString[i] = '-';
+        }
+      }
+
+      lcd.setCursor(10, 0);
+      lcd.print(lineString);
+      
+      lcd.setCursor(13, 1);
+      lcd.print(brightnessValue);
+        
     }
-    else if (data[3] == 1 && direction != RIGHT) {
-      Motor(Forward, 40, Forward, 35);
-      direction = RIGHT;
-    }
-    else if (data[0] == 1 && direction != STRONGLEFT) {
-      Motor(Forward, 10, Forward, 40);
-      direction = STRONGLEFT;
-    }
-    else if (data[4] == 1 && direction != STRONGRIGHT) {
-      Motor(Forward, 40, Forward, 10);
-      direction = STRONGRIGHT;
-    }
+        
+    //Serial.print("Direction: ");
+    //Serial.println(direction);
   }
 }
