@@ -18,7 +18,7 @@ void mStandby()
     delay(10);
     beep(1000);
 
-    standbyMillis = millis();
+    standbyMillis = currentMillis;
   }
   else if (currentKey == 1) {
     lcd.backlight();
@@ -26,7 +26,7 @@ void mStandby()
   }
   else
   {
-    if (millis() - standbyMillis > DISPLAY_TIMEOUT)
+    if (currentMillis - standbyMillis > DISPLAY_TIMEOUT)
     {
       lcd.noBacklight();
     }

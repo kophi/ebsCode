@@ -1,9 +1,9 @@
 void mMenu() {            //startet das Menu zeigt es auf dem LCD an
 
-  if(modeChanged)
+  if (modeChanged)
   {
     modeChanged = 0;
-      
+
     lcd.setCursor(0, 0);
     lcd.print("Choose Mode");
     lcd.setCursor(0, 1);

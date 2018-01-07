@@ -43,7 +43,7 @@ void simpleBeep() {
 
 void beep(int freq)
 {
-  startMillis = millis();
+  startMillis = currentMillis;
   do
   {
     digitalWrite(PIN_SPEAKER, HIGH);

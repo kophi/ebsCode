@@ -21,7 +21,7 @@
 unsigned long followMillis = 0;
 unsigned long lcdMillis = 0;
 int direction;
-char lineString[5] = {'-','-','-','-','-'};
+char lineString[5] = {'-', '-', '-', '-', '-'};
 
 int getLineValue(unsigned int sensorIdx)
 {
@@ -119,11 +119,11 @@ void mLineFollow() {
     if (currentMillis - lcdMillis > LCD_INTERVAL) {
       lcdMillis = currentMillis;
 
-      brightnessValue = map(getBrightnessValue(),0,1023,0,100);
-      
+      brightnessValue = map(getBrightnessValue(), 0, 1023, 0, 100);
+
       for (int i = 0; i < 5; ++i)
       {
-        if(i == direction)
+        if (i == direction)
         {
           lineString[i] = 'x';
         }
@@ -135,12 +135,12 @@ void mLineFollow() {
 
       lcd.setCursor(10, 0);
       lcd.print(lineString);
-      
+
       lcd.setCursor(13, 1);
       lcd.print(brightnessValue);
-        
+
     }
-        
+
     //Serial.print("Direction: ");
     //Serial.println(direction);
   }
