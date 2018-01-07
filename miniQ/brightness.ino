@@ -2,7 +2,7 @@
 
 unsigned long brightnessMillis = 0;
 unsigned int brightnessValue;
-unsigned int brightnessPercent;
+byte brightnessPercent;
 char lcdValue[3];
 
 int getBrightnessValue()

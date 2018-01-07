@@ -20,7 +20,7 @@
 
 unsigned long followMillis = 0;
 unsigned long lcdMillis = 0;
-int direction;
+byte direction;
 char lineString[5] = {'-', '-', '-', '-', '-'};
 
 int getLineValue(unsigned int sensorIdx)

@@ -29,9 +29,9 @@
 
 LiquidCrystal_I2C lcd(0x20, 16, 2);
 
-unsigned int currentKey = 0;
-unsigned int lastKey = 0;
-unsigned int mode = M_STANDBY;
+byte currentKey = 0;
+byte lastKey = 0;
+byte mode = M_STANDBY;
 boolean modeChanged = true;
 unsigned long currentMillis = 0;
 unsigned long startMillis = 0;
