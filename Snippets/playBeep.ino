@@ -232,13 +232,3 @@ void playBeep(int soundtrack, float soundheight, int soundspeed)
     //delay(finalsoundpause);                                         //Pause (defaultwert = 0)
 }
 
-void simpleBeep(){
-  
-  for(int i= 0; i<30;i++){
-  digitalWrite(16, HIGH);
-  delay(2);
-  digitalWrite(16, LOW);
-  delay(2);
-  }
-  
-}
