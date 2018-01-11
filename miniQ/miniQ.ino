@@ -1,46 +1,63 @@
 /***********************************************
-   ebs HS 2017 Projekt
-   miniQ Team 6
-   Philipp Kopf
+   FHNW, ebs, HS17
+
    Stephanie Fernandez Andersson
+   Philipp Kopf
    Manuel Sutter
-   Studiengang Systemtechnik 7.Semester
+
+   Modul: System
 ***********************************************
-   Header
 */
+
+/**
+ * Includes
+ */
 #include <LiquidCrystal_I2C.h>
 
+/**
+ * Pins
+ */
 #define PIN_KEYS 6
 #define PIN_BRIGHTNESS A5
 #define PIN_SPEAKER 16
 
+/**
+ * Tasten-Frequenzen
+ */
 #define KEY_NONE 1020
 #define KEY_1 200
-#define KEY_2 620
+#define KEY_2 650
 #define KEY_3 760
 
+/**
+ * Modi
+ */
 #define M_STANDBY 0
 #define M_MENU 1
 #define M_LINEFOLLOW 2
 #define M_BRIGHTNESS 3
 
+/**
+ * Debug On/Off
+ */
 #define DEBUG false
 
-
+/**
+ * Variabeln deklarieren und initialisieren
+ */
 LiquidCrystal_I2C lcd(0x20, 16, 2);
 
-byte currentKey = 0;
-byte lastKey = 0;
-byte mode = M_STANDBY;
-boolean modeChanged = true;
-unsigned long currentMillis = 0;
-unsigned long startMillis = 0;
-unsigned int keyValue = 0;
+byte currentKey = 0; //die aktuell gedrückte Taste
+byte lastKey = 0; //die zuvor gedrückte Taste
+byte mode = M_STANDBY; //der aktuelle Modus
+boolean modeChanged = true; //damit erkennen die Module, dass der Modus gewechselt wurde
+unsigned long currentMillis = 0; //aktuelle millis(). Für Timing
+unsigned long startMillis = 0; //millis()-Zwischenspeicher für beep()
+unsigned int keyValue = 0; //Zwischenspeicher für Tasten-Frequenz
 
-void simpleBeep() {
-  beep(1000);
-}
-
+/**
+ * beep() erzeugt einen Ton über 100ms mit variabler Frequenz
+ */
 void beep(int freq)
 {
   startMillis = currentMillis;
@@ -54,6 +71,17 @@ void beep(int freq)
   while (millis() - startMillis < 100);
 }
 
+/**
+ * simpleBeep() nutzt beep() um den Tastenton zu erzeugen
+ */
+void simpleBeep() {
+  beep(1000);
+}
+
+/**
+ * detectKeypress() erkennt ob und was für eine Taste gedrückt wurde.
+ * Verhindert, dass die Taste mehrmals anschlägt wenn sie zuvor nicht losgelassen wurde
+ */
 void detectKeyPress() {         //erkennt welcher Key (1-3) gedrückt worden ist
   if (analogRead(PIN_KEYS) < KEY_NONE) {
 
@@ -90,6 +118,9 @@ void detectKeyPress() {         //erkennt welcher Key (1-3) gedrückt worden ist
   }
 }
 
+/**
+ * changeMode() ändert den Zusand auf den gewünschten Modus
+ */
 void changeMode(int newMode)
 {
   if (DEBUG)
@@ -102,13 +133,14 @@ void changeMode(int newMode)
 
   mode = newMode;
   modeChanged = true;
+  lcd.clear();
   simpleBeep();
 }
 
 
-/**************************************************
-   Setup Routine
-*/
+/**
+ * setup() wird einmal ausgeführt wenn der MiniQ eingeschaltet wird
+ */
 void setup() {
   if (DEBUG)
   {
@@ -117,9 +149,11 @@ void setup() {
   lcd.init();
   lcd.backlight();
 }
-/**************************************************
-   Hauptschleife
-*/
+
+/**
+ * loop() ist die Hauptschleife und wird immer wieder ausgeführt.
+ * Hier wird die Modus-Funktion des aktuellen Modus aufgerufen
+ */
 void loop() {
 
   detectKeyPress();
@@ -137,10 +171,5 @@ void loop() {
   }
   else { //Mode: Standby(Default Mode)
     mStandby();
-  }
-
-  if (modeChanged)
-  {
-    lcd.clear();
   }
 }

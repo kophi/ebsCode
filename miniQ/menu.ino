@@ -1,4 +1,4 @@
-void mMenu() {            //startet das Menu zeigt es auf dem LCD an
+void mMenu() {
 
   if (modeChanged)
   {
@@ -9,13 +9,13 @@ void mMenu() {            //startet das Menu zeigt es auf dem LCD an
     lcd.setCursor(0, 1);
     lcd.print("Press KEY 1/2/3 ");
   }
-  else if (currentKey == 1) { //LineFollow&Licht&LCD&Motors
+  else if (currentKey == 1) { //LineFollow
     changeMode(M_LINEFOLLOW);
   }
-  else if (currentKey == 2) { //Licht&Ton&LCD
+  else if (currentKey == 2) { //Brightness
     changeMode(M_BRIGHTNESS);
   }
-  else if (currentKey == 3) { //Menu beenden -->Standbybetrieb
+  else if (currentKey == 3) { //Standby
     changeMode(M_STANDBY);
   }
 }
