@@ -9,6 +9,10 @@
 ***********************************************
 */
 
+/**
+ * Funktion für das Handling der Menubedienung, verweist anhand des Tastendrukcs
+ * auf die jeweiligen Hauptfunktionen, oder den Standby
+ */
 void mMenu() {
 
   if (modeChanged)

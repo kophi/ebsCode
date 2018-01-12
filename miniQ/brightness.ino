@@ -16,11 +16,19 @@ unsigned int brightnessValue;
 byte brightnessPercent;
 char lcdValue[3];
 
+/**
+ * liest den Analogwertwert des Sensors an PIN_BRIGHTNESS ein und gibt diesen
+ * als Returnwert zurück
+ */
 int getBrightnessValue()
 {
   return analogRead(PIN_BRIGHTNESS);
 }
 
+/**
+ * Die Hauptfunktion für die Funktionsweise Licht Messen auf LCD anzeigen und
+ * Tonhöhe entsprechend abspielen
+ */
 void mBrightness() {
   if (modeChanged)
   {
