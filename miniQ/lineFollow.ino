@@ -34,6 +34,11 @@ unsigned long lcdMillis = 0;
 byte direction;
 char lineString[5] = {'-', '-', '-', '-', '-'};
 
+/**
+ * liest den Wert eines Infrarotsensoren aus, gibt an ob der Wert
+ * Dunkel ist (Linie erkennen) und gibt ein digitalen Wert entsprechend 
+ * 0 oder 1 aus
+ */
 int getLineValue(unsigned int sensorIdx)
 {
   if (sensorIdx < 5) {
@@ -48,17 +53,27 @@ int getLineValue(unsigned int sensorIdx)
   }
 }
 
+/**
+ * setzt die Geschwindigkeit beider Motoren gleichzeitig
+ */
 void setMotors(int speedLeft, int speedRight)
 {
   analogWrite(PIN_MOTOR_LEFT_SPEED, speedLeft);
   analogWrite(PIN_MOTOR_RIGHT_SPEED, speedRight);
 }
 
+/**
+ * stoppt beide Motoren
+ */
 void stopMotors()
 {
   setMotors(LOW, LOW);
 }
 
+/**
+ * Hauptfunktion für den Modus Linie Folgen, Linienposition anzeigen,
+ * relative Lichtstärke anzeigen
+ */
 void mLineFollow() {
   if (modeChanged)
   {

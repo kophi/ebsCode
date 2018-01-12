@@ -71,7 +71,7 @@ void beep(int freq)
     digitalWrite(PIN_SPEAKER, LOW);
     delayMicroseconds(freq);
   }
-  while (millis() - startMillis < 80);
+  while (millis() - startMillis < 100);
 }
 
 /**

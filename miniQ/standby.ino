@@ -13,6 +13,10 @@
 
 unsigned long standbyMillis = 0;
 
+/**
+ * Bei Aufruf wird eine Melodie abgespielt und auf dem LCD "Standby" ausgegeben
+ * und nach DISPLAY_TIMEOUT das Display Licht ausgeschaltet
+ */
 void mStandby()
 {
   if (modeChanged)
