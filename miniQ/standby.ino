@@ -1,3 +1,14 @@
+/***********************************************
+   FHNW, ebs, HS17
+
+   Stephanie Fernandez Andersson
+   Philipp Kopf
+   Manuel Sutter
+
+   Modul: Standby
+***********************************************
+*/
+
 #define DISPLAY_TIMEOUT 6000
 
 unsigned long standbyMillis = 0;
@@ -17,7 +28,7 @@ void mStandby()
     beep(1500);
     delay(10);
     beep(1000);
-
+    
     standbyMillis = currentMillis;
   }
   else if (currentKey == 1) {

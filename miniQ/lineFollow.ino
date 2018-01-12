@@ -1,5 +1,16 @@
+/***********************************************
+   FHNW, ebs, HS17
+
+   Stephanie Fernandez Andersson
+   Philipp Kopf
+   Manuel Sutter
+
+   Modul: LineFollow
+***********************************************
+*/
+
 #define FOLLOW_INTERVAL 2
-#define LCD_INTERVAL 300
+#define LCD_INTERVAL 200
 
 #define SPEED_MAX 40
 #define SPEED_MID 35
@@ -30,17 +41,10 @@ int getLineValue(unsigned int sensorIdx)
     {
       return 0;
     }
-    else {
+    else
+    {
       return 1;
     }
-    /*
-      Serial.print("Val ");
-      Serial.print(sensorIdx);
-      Serial.print(": ");
-      Serial.print(x);
-      Serial.print(" -> ");
-      Serial.println(y);
-    */
   }
 }
 
@@ -48,10 +52,6 @@ void setMotors(int speedLeft, int speedRight)
 {
   analogWrite(PIN_MOTOR_LEFT_SPEED, speedLeft);
   analogWrite(PIN_MOTOR_RIGHT_SPEED, speedRight);
-
-  //Serial.print(speedLeft);
-  //Serial.print(",");
-  //Serial.println(speedRight);
 }
 
 void stopMotors()
@@ -80,17 +80,7 @@ void mLineFollow() {
     changeMode(M_STANDBY);
   }
   else {
-    /*
-      Serial.print(getLineValue(0));
-      Serial.print(",");
-      Serial.print(getLineValue(1));
-      Serial.print(",");
-      Serial.print(getLineValue(2));
-      Serial.print(",");
-      Serial.print(getLineValue(3));
-      Serial.print(",");
-      Serial.println(getLineValue(4));
-    */
+    
     if (currentMillis - followMillis > FOLLOW_INTERVAL) {
       followMillis = currentMillis;
 
@@ -114,12 +104,14 @@ void mLineFollow() {
         setMotors(SPEED_MAX, SPEED_MIN);
         direction = DIRECTION_STRONGRIGHT;
       }
+      
     }
 
     if (currentMillis - lcdMillis > LCD_INTERVAL) {
+      
       lcdMillis = currentMillis;
 
-      brightnessValue = map(getBrightnessValue(), 0, 1023, 0, 100);
+      brightnessValue = map(getBrightnessValue(), 0, 1023, 100, 0);
 
       for (int i = 0; i < 5; ++i)
       {
@@ -140,8 +132,5 @@ void mLineFollow() {
       lcd.print(brightnessValue);
 
     }
-
-    //Serial.print("Direction: ");
-    //Serial.println(direction);
   }
 }

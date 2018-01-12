@@ -1,3 +1,14 @@
+/***********************************************
+   FHNW, ebs, HS17
+
+   Stephanie Fernandez Andersson
+   Philipp Kopf
+   Manuel Sutter
+
+   Modul: Menu
+***********************************************
+*/
+
 void mMenu() {
 
   if (modeChanged)

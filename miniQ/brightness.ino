@@ -1,4 +1,15 @@
-#define BRIGHTNESS_INTERVAL 500
+/***********************************************
+   FHNW, ebs, HS17
+
+   Stephanie Fernandez Andersson
+   Philipp Kopf
+   Manuel Sutter
+
+   Modul: Brightness
+***********************************************
+*/
+
+#define BRIGHTNESS_INTERVAL 240 // Interval mit dem der LCD-Text aktualisiert wird
 
 unsigned long brightnessMillis = 0;
 unsigned int brightnessValue;
