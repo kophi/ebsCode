@@ -118,8 +118,7 @@ void mLineFollow() {
       else if (getLineValue(4) == 1 && direction != DIRECTION_STRONGRIGHT) {
         setMotors(SPEED_MAX, SPEED_MIN);
         direction = DIRECTION_STRONGRIGHT;
-      }
-      
+      } 
     }
 
     if (currentMillis - lcdMillis > LCD_INTERVAL) {
@@ -128,15 +127,15 @@ void mLineFollow() {
 
       brightnessValue = map(getBrightnessValue(), 0, 1023, 100, 0);
 
-      for (int i = 0; i < 5; ++i)
+      for (int i = 1; i < 6; ++i)
       {
         if (i == direction)
         {
-          lineString[i] = 'x';
+          lineString[i-1] = 'x';
         }
         else
         {
-          lineString[i] = '-';
+          lineString[i-1] = '-';
         }
       }
 
