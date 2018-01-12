@@ -56,7 +56,7 @@ unsigned long startMillis = 0; //millis()-Zwischenspeicher für beep()
 unsigned int keyValue = 0; //Zwischenspeicher für Tasten-Frequenz
 
 
-unsigned long testMillis = 0;
+
 
 /**
  * beep() erzeugt einen Ton über 100ms mit variabler Frequenz
@@ -98,7 +98,6 @@ void detectKeyPress() {         //erkennt welcher Key (1-3) gedrückt worden ist
     }
     else if (keyValue < KEY_3) {
       currentKey = 3;
-      testMillis = millis();
       
     }
     else {
